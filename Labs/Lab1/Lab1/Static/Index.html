@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    Result: <input type="number" id="result" readonly />
+    Input: <input type="number" id="newResult" />
+    Top: <input type="number" id="topStack" />
+    <button onclick="Get()">Get</button>
+    <button onclick="Post()">Post</button>
+    <button onclick="Put()">Put</button>
+    <button onclick="Delete()">Delete</button>
+
+    <script type="text/javascript">
+    function Get() {
+        console.log('Get');
+        $.ajax({
+            type: 'GET',
+            url: '/WebServices/.dvr',
+            dataType: 'json',
+            success: (data) => {
+                console.log(data.Result);
+                result.value = data.Result;
+            },
+        });
+    }
+
+    function Post() {
+        console.log('Post');
+        $.ajax({
+            type: 'POST',
+            url: `/WebServices/.dvr`,
+            dataType: 'json',
+            data: {
+                Result: newResult.value,
+            },
+            success: (data) => {
+                console.log(data.Result);
+                result.value = data.Result;
+            },
+        });
+    }
+
+    function Put() {
+        console.log('Put');
+        $.ajax({
+            type: 'PUT',
+            url: `/WebServices/.dvr`,
+            data: {
+                add: topStack.value,
+            },
+            dataType: 'json',
+        });
+    }
+
+    function Delete() {
+        console.log('Delete');
+        $.ajax({
+            type: 'DELETE',
+            url: `/WebServices/.dvr`,
+            dataType: 'json',
+        });
+    }
+    </script>
+</body>
+</html>

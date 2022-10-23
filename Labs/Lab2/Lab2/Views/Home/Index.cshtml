@@ -1,0 +1,54 @@
+﻿Result: <input type="number" id="result" readonly/>
+Input: <input type="number" id="newResult"/>
+Top: <input type="number" id="topStack"/>
+<button onclick="Get()">Get</button>
+<button onclick="Post()">Post</button>
+<button onclick="Put()">Put</button>
+<button onclick="Delete()">Delete</button>
+
+<script type="text/javascript">
+    function Get() {
+        console.log('Get');
+        $.ajax({
+            type: 'GET',
+            url: 'WebServices2/api/result',
+            dataType: 'json',
+            success: (data) => {
+                console.log(data.Value);
+                result.value = data.Value;
+            },
+        });
+    }
+
+    function Post() {
+        console.log('Post');
+        $.ajax({
+            type: 'POST',
+            url: `/WebServices2/api/result?value=${newResult.value}`,
+            dataType: 'json',
+            success: (data) => {
+                console.log(data.Value);
+                result.value = data.Value;
+            },
+        });
+    }
+
+    function Put() {
+        console.log('Put');
+        $.ajax({
+            type: 'PUT',
+            url: `/WebServices2/api/result?add=${topStack.value}`,
+            dataType: 'json',
+        });
+    }
+
+    function Delete() {
+        console.log('Delete');
+        $.ajax({
+            type: 'DELETE',
+            url: `/WebServices2/api/result`,
+            dataType: 'json',
+        });
+    }
+</script>
+
