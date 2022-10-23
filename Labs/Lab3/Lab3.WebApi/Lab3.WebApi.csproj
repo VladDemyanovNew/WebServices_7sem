@@ -141,13 +141,22 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Constants\ResourcesLinks.cs" />
+    <Compile Include="Controllers\ErrorsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Enums\HttpMethod.cs" />
+    <Compile Include="Filters\ApiExceptionFilterAttribute.cs" />
+    <Compile Include="Formatters\StudentResourceFormatter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\StudentResourceHelper.cs" />
     <Compile Include="Models\Link.cs" />
-    <Compile Include="Models\Responses\Resource.cs" />
+    <Compile Include="Models\ErrorResponse.cs" />
+    <Compile Include="Models\Resources\ErrorResource.cs" />
+    <Compile Include="Models\Resources\LinkedResourceCollection.cs" />
+    <Compile Include="Models\Resources\LinkedResource.cs" />
+    <Compile Include="Models\Resources\StudentResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

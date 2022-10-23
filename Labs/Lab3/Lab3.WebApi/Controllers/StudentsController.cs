@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
+using System.Linq;
 
 using Ploeh.Hyprlinkr;
-using System.Linq;
 
 using Lab3.Core.Services.Abstractions;
 using Lab3.Database.Entities;
-using Lab3.WebApi.Models;
 using Lab3.WebApi.Models.Resources;
-using Lab3.WebApi.Enums;
+using Lab3.WebApi.Helpers;
 
 namespace Lab3.WebApi.Controllers
 {
@@ -22,86 +20,27 @@ namespace Lab3.WebApi.Controllers
             this.studentsService = studentsService;
         }
 
-        public Resource<ICollection<Resource<Student>>> GetAll()
+        public LinkedResourceCollection<StudentResource> GetAll()
         {
             var students = this.studentsService.GetAll();
 
-            var links = new List<Link>
-            {
-                new Link
-                {
-                    Rel = "self",
-                    Href = this.Url.GetLink<StudentsController>(controller => this.GetAll()).ToString(),
-                },
-                new Link(HttpMethod.POST)
-                {
-                    Rel = "add-new",
-                    Href = this.Url.GetLink<StudentsController>(controller => this.Post(new Student { })).ToString(),
-                },
-            };
-
-            var resources = new Resource<ICollection<Resource<Student>>>();
-            resources.Links.AddRange(links);
-
-            return resources;
+            return StudentResourceHelper.ConvetToResource(students.ToList(), this.Request);
         }
 
-        public async Task<Resource<Student>> Get(int id)
+        public async Task<StudentResource> Get(int id)
         {
             var student = await this.studentsService.GetAsync(id);
 
-            var links = new List<Link>
-            {
-                new Link
-                {
-                    Rel = "self",
-                    Href = this.Url.GetLink<StudentsController>(controller => this.Get(id)).ToString(),
-                },
-                new Link(HttpMethod.PUT)
-                {
-                    Rel = "update-it",
-                    Href = this.Url.GetLink<StudentsController>(controller => this.Put(id, new Student { })).ToString(),
-                },
-                new Link(HttpMethod.DELETE)
-                {
-                    Rel = "delete-it",
-                    Href = this.Url.GetLink<StudentsController>(controller => this.Delete(id)).ToString(),
-                },
-            };
-
-            var resource = new Resource<Student> { Value = student };
-            resource.Links.AddRange(links);
-
-            return resource;
+            return StudentResourceHelper.ConvetToResource(student, this.Request);
         }
 
         public async Task<IHttpActionResult> Post([FromBody] Student studentCreateData)
         {
             var student = await this.studentsService.AddAsync(studentCreateData);
+            var resource = StudentResourceHelper.ConvetToResource(student, this.Request);
 
             var location = this.Url.GetLink<StudentsController>(controller => this.Get(student.Id)).ToString();
-            var links = new List<Link>
-            {
-                new Link
-                {
-                    Rel = "get-it",
-                    Href = location,
-                },
-                new Link(HttpMethod.PUT)
-                {
-                    Rel = "update-it",
-                    Href = this.Url.GetLink<StudentsController>(controller => this.Put(student.Id, new Student { })).ToString(),
-                },
-                new Link(HttpMethod.DELETE)
-                {
-                    Rel = "delete-it",
-                    Href = this.Url.GetLink<StudentsController>(controller => this.Delete(student.Id)).ToString(),
-                },
-            };
 
-            var resource = new Resource<Student> { Value = student };
-            resource.Links.AddRange(links);
-            
             return this.Created(location, resource);
         }
 

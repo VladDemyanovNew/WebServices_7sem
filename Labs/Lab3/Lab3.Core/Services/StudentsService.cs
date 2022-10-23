@@ -10,6 +10,7 @@ using System.Web.Http;
 using Lab3.Core.Services.Abstractions;
 using Lab3.Database;
 using Lab3.Database.Entities;
+using Lab3.Core.Exceptions;
 
 namespace Lab3.Core.Services
 {
@@ -29,7 +30,7 @@ namespace Lab3.Core.Services
             var student = await this._dbContext.Students.FindAsync(studentId);
             if (student == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new ApiEntityNotFoundException($"Can't get student with id={studentId}, because it doesn't exist");
             }
 
             return student;
@@ -49,7 +50,7 @@ namespace Lab3.Core.Services
             var student = await this._dbContext.Students.FindAsync(studentId);
             if (student == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new ApiEntityNotFoundException($"Can't delete student with id={studentId}, because it doesn't exist");
             }
 
             this._dbContext.Students.Remove(student);
@@ -61,7 +62,7 @@ namespace Lab3.Core.Services
             var student = await this._dbContext.Students.FindAsync(studentId);
             if (student == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                throw new ApiEntityNotFoundException($"Can't update student with id={studentId}, because it doesn't exist");
             }
 
             studentUpdateData.Id = studentId;

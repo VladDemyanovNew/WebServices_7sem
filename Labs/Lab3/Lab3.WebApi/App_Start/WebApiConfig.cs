@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lab3.WebApi.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -9,9 +10,9 @@ namespace Lab3.WebApi
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
 
-            // Web API routes
+            config.Filters.Add(new ApiExceptionFilterAttribute());
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
