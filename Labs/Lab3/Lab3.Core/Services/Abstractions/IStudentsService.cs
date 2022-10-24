@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Lab3.Core.Models;
 using Lab3.Database.Entities;
 
 namespace Lab3.Core.Services.Abstractions
 {
     public interface IStudentsService
     {
-        IEnumerable<Student> GetAll();
+        IQueryable<Student> GetAll();
 
         Task<Student> GetAsync(int studentId);
 
@@ -19,5 +20,7 @@ namespace Lab3.Core.Services.Abstractions
         Task<Student> AddAsync(Student studentCreateData);
 
         Task UpdateAsync(int studentId, Student studentUpdateData);
+
+        IQueryable<Student> FilterByUriParams(IQueryable<Student> studentsQuery, StudentsQueryParams studentsQueryParams);
     }
 }

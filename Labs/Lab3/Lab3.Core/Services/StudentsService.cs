@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web.Http;
 
 using Lab3.Core.Services.Abstractions;
 using Lab3.Database;
 using Lab3.Database.Entities;
 using Lab3.Core.Exceptions;
+using Lab3.Core.Models;
 
 namespace Lab3.Core.Services
 {
@@ -23,7 +20,7 @@ namespace Lab3.Core.Services
             this._dbContext = dbContext;
         }
 
-        public IEnumerable<Student> GetAll() => this._dbContext.Students;
+        public IQueryable<Student> GetAll() => this._dbContext.Students;
 
         public async Task<Student> GetAsync(int studentId)
         {
@@ -56,7 +53,7 @@ namespace Lab3.Core.Services
             this._dbContext.Students.Remove(student);
             await this._dbContext.SaveChangesAsync();
         }
-
+        
         public async Task UpdateAsync(int studentId, Student studentUpdateData)
         {
             var student = await this._dbContext.Students.FindAsync(studentId);
@@ -69,6 +66,41 @@ namespace Lab3.Core.Services
             this._dbContext.Entry(studentUpdateData).State = EntityState.Modified;
 
             await this._dbContext.SaveChangesAsync();
+        }
+
+        public IQueryable<Student> FilterByUriParams(IQueryable<Student> studentsQuery, StudentsQueryParams studentsQueryParams)
+        {
+            studentsQuery = studentsQuery
+                .Where(student => student.Id >= studentsQueryParams.MinId);
+
+            if (studentsQueryParams.MaxId > 0)
+            {
+                studentsQuery = studentsQuery.Where(student => student.Id <= studentsQueryParams.MaxId);
+            }
+
+            if (studentsQueryParams.Like != null)
+            {
+                studentsQuery = studentsQuery.Where(student => 
+                    student.Name.ToLower().Contains(studentsQueryParams.Like.ToLower()));
+            }
+
+            if (studentsQueryParams.GlobalLike != null)
+            {
+                studentsQuery = studentsQuery.Where(student =>
+                    string.Concat(student.Id, student.Name, student.Phone)
+                    .ToString()
+                    .Contains(studentsQueryParams.GlobalLike.ToLower()));
+            }
+
+            studentsQuery = studentsQueryParams.Sort
+                ? studentsQuery.OrderBy(student => student.Name)
+                : studentsQuery.OrderBy(student => student.Id);
+
+            studentsQuery = studentsQuery
+                .Skip(studentsQueryParams.Offset)
+                .Take(studentsQueryParams.Limit);
+
+            return studentsQuery;
         }
     }
 }

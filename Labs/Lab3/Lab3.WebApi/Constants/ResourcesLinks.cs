@@ -5,6 +5,8 @@ using Ploeh.Hyprlinkr;
 using Lab3.WebApi.Models;
 using Lab3.WebApi.Controllers;
 using Lab3.WebApi.Enums;
+using Lab3.Core.Models;
+using Lab3.Core.Helpers;
 
 namespace Lab3.WebApi.Constants
 {
@@ -54,14 +56,63 @@ namespace Lab3.WebApi.Constants
             };
         }
 
-        public static List<Link> GetStudentResourceCollectionLinks(RouteLinker linker)
+        public static List<Link> GetStudentResourceCollectionLinks(StudentsQueryParams uriParams, int studentsCount, RouteLinker linker)
         {
+            var uriParamsFirstPage = new StudentsQueryParams();
+            var uriParamsLastPage = new StudentsQueryParams();
+            var uriParamsPrevPage = new StudentsQueryParams();
+            var uriParamsNextPage = new StudentsQueryParams();
+
+            StudentsQueryParamsHelper.Fill(uriParams, uriParamsFirstPage);
+            StudentsQueryParamsHelper.Fill(uriParams, uriParamsLastPage);
+            StudentsQueryParamsHelper.Fill(uriParams, uriParamsPrevPage);
+            StudentsQueryParamsHelper.Fill(uriParams, uriParamsNextPage);
+
+            uriParamsLastPage.Offset = studentsCount < uriParamsNextPage.Limit
+                ? 0
+                : studentsCount - uriParamsNextPage.Limit;
+            uriParamsFirstPage.Offset = 0;
+            uriParamsNextPage.Offset += uriParamsNextPage.Limit;
+            uriParamsPrevPage.Offset =
+                uriParamsPrevPage.Offset < uriParamsPrevPage.Limit
+                ? 0
+                : uriParamsPrevPage.Offset - uriParamsPrevPage.Limit;
+
             return new List<Link>
             {
                 new Link(HttpMethod.POST)
                 {
                     Rel = "add-new",
-                    Href = linker.GetUri<StudentsController>(controller => controller.Post(null)).ToString(),
+                    Href = linker.GetUri<StudentsController>(controller => 
+                        controller.Post(null)).ToString(),
+                },
+                new Link(HttpMethod.GET)
+                {
+                    Rel = "first-page",
+                    Href = linker.GetUri<StudentsController>(controller => 
+                        controller.GetAll(null)).ToString() + 
+                        "?" + uriParamsFirstPage.ToQueryString(),
+                },
+                new Link(HttpMethod.GET)
+                {
+                    Rel = "last-page",
+                    Href = linker.GetUri<StudentsController>(controller => 
+                        controller.GetAll(null)).ToString() +
+                        "?" + uriParamsLastPage.ToQueryString(),
+                },
+                new Link(HttpMethod.GET)
+                {
+                    Rel = "next-page",
+                    Href = linker.GetUri<StudentsController>(controller => 
+                        controller.GetAll(null)).ToString() + 
+                        "?" + uriParamsNextPage.ToQueryString(),
+                },
+                new Link(HttpMethod.GET)
+                {
+                    Rel = "previous-page",
+                    Href = linker.GetUri<StudentsController>(controller => 
+                        controller.GetAll(null)).ToString() +
+                        "?" + uriParamsPrevPage.ToQueryString(),
                 },
             };
         }

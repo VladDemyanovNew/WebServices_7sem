@@ -8,6 +8,9 @@ using Lab3.Core.Services.Abstractions;
 using Lab3.Database.Entities;
 using Lab3.WebApi.Models.Resources;
 using Lab3.WebApi.Helpers;
+using Lab3.WebApi.Models;
+using System.Data.Entity;
+using Lab3.Core.Models;
 
 namespace Lab3.WebApi.Controllers
 {
@@ -20,11 +23,16 @@ namespace Lab3.WebApi.Controllers
             this.studentsService = studentsService;
         }
 
-        public LinkedResourceCollection<StudentResource> GetAll()
+        public async Task<LinkedResourceCollection<StudentResource>> GetAll([FromUri] StudentsQueryParams studentsQueryParams)
         {
-            var students = this.studentsService.GetAll();
+            var studentsQuery = this.studentsService.GetAll();
+            var students = await this.studentsService
+                .FilterByUriParams(studentsQuery, studentsQueryParams)
+                .ToListAsync();
 
-            return StudentResourceHelper.ConvetToResource(students.ToList(), this.Request);
+            var studentsCount = studentsQuery.Count();
+
+            return StudentResourceHelper.ConvetToResource(students, studentsQueryParams, studentsCount, this.Request);
         }
 
         public async Task<StudentResource> Get(int id)

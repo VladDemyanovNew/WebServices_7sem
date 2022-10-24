@@ -8,6 +8,7 @@ using Lab3.Database.Entities;
 using Lab3.WebApi.Constants;
 using Lab3.WebApi.Models.Resources;
 using Lab3.WebApi.Models;
+using Lab3.Core.Models;
 
 namespace Lab3.WebApi.Helpers
 {
@@ -40,7 +41,11 @@ namespace Lab3.WebApi.Helpers
             };
         }
 
-        public static LinkedResourceCollection<StudentResource> ConvetToResource(ICollection<Student> students, HttpRequestMessage httpRequest)
+        public static LinkedResourceCollection<StudentResource> ConvetToResource(
+            ICollection<Student> students,
+            StudentsQueryParams studentsQueryParams,
+            int studentsCount,
+            HttpRequestMessage httpRequest)
         {
             var linker = new RouteLinker(httpRequest);
 
@@ -49,7 +54,7 @@ namespace Lab3.WebApi.Helpers
             return new LinkedResourceCollection<StudentResource>
             {
                 Embedded = embedded.ToList(),
-                Links = ResourcesLinks.GetStudentResourceCollectionLinks(linker),
+                Links = ResourcesLinks.GetStudentResourceCollectionLinks(studentsQueryParams, studentsCount, linker),
             };
         }
     }
