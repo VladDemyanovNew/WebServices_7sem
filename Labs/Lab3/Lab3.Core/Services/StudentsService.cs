@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Threading.Tasks;
 
 using Lab3.Core.Services.Abstractions;
@@ -18,6 +19,15 @@ namespace Lab3.Core.Services
         public StudentsService(StudentsDbContext dbContext)
         {
             this._dbContext = dbContext;
+        }
+
+        private bool AreColumnsValid(string columns)
+        {
+            var validColumns = new string[] { "id", "name", "surname", "lastname", "phone" };
+            return columns
+                .ToLower()
+                .Split(',')
+                .All(validColumns.Contains);
         }
 
         public IQueryable<Student> GetAll() => this._dbContext.Students;
@@ -68,7 +78,7 @@ namespace Lab3.Core.Services
             await this._dbContext.SaveChangesAsync();
         }
 
-        public IQueryable<Student> FilterByUriParams(IQueryable<Student> studentsQuery, StudentsQueryParams studentsQueryParams)
+        public IQueryable<object> FilterByUriParams(IQueryable<Student> studentsQuery, StudentsQueryParams studentsQueryParams)
         {
             studentsQuery = studentsQuery
                 .Where(student => student.Id >= studentsQueryParams.MinId);
@@ -99,6 +109,13 @@ namespace Lab3.Core.Services
             studentsQuery = studentsQuery
                 .Skip(studentsQueryParams.Offset)
                 .Take(studentsQueryParams.Limit);
+
+            var columns = studentsQueryParams.Columns;
+            if (columns != null && this.AreColumnsValid(columns))
+            {
+                return (IQueryable<object>)studentsQuery.Select($"new ({studentsQueryParams.Columns})");
+                
+            }
 
             return studentsQuery;
         }

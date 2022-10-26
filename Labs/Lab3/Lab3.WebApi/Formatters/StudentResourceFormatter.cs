@@ -39,7 +39,7 @@ namespace Lab3.WebApi.Formatters
             if (resource is LinkedResourceCollection<StudentResource>)
             {
                 writer.WriteStartElement("resource");
-                writer.WriteAttributeString("href", resource.Href);
+                // writer.WriteAttributeString("href", resource.Href);
 
                 foreach (LinkedResource innerResource in (IEnumerable)resource)
                 {

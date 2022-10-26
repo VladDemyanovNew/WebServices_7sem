@@ -14,6 +14,20 @@ namespace Lab3.WebApi.Helpers
 {
     public static class StudentResourceHelper
     {
+        private static dynamic ConvetToResource(object student, RouteLinker linker)
+        {
+            dynamic resource = student.ToExpandoObject();
+
+            var hasId = ((IDictionary<string, object>)resource).ContainsKey("Id");
+            if (hasId)
+            {
+                var links = ResourcesLinks.GetStudentResourceLinksHttpGet(resource.Id, linker);
+                resource.Links = links;
+            }
+
+            return resource;
+        }
+
         public static StudentResource ConvetToResource(Student student, HttpRequestMessage httpRequest)
         {
             var linker = new RouteLinker(httpRequest);
@@ -36,24 +50,23 @@ namespace Lab3.WebApi.Helpers
                 Surname = student.Surname,
                 Lastname = student.Lastname,
                 Phone = student.Phone,
-
                 Links = links,
             };
         }
 
-        public static LinkedResourceCollection<StudentResource> ConvetToResource(
-            ICollection<Student> students,
+        public static LinkedResourceCollection<object> ConvetToResource(
+            ICollection<object> students,
             StudentsQueryParams studentsQueryParams,
             int studentsCount,
             HttpRequestMessage httpRequest)
         {
             var linker = new RouteLinker(httpRequest);
+            var embedded = students.Select(student => ConvetToResource(student, linker)).ToList();
 
-            var embedded = students.Select(student => ConvetToResource(student, httpRequest));
-
-            return new LinkedResourceCollection<StudentResource>
+            return new LinkedResourceCollection<object>
             {
-                Embedded = embedded.ToList(),
+                TotalCount = studentsCount,
+                Embedded = embedded,
                 Links = ResourcesLinks.GetStudentResourceCollectionLinks(studentsQueryParams, studentsCount, linker),
             };
         }

@@ -23,7 +23,7 @@ namespace Lab3.WebApi.Controllers
             this.studentsService = studentsService;
         }
 
-        public async Task<LinkedResourceCollection<StudentResource>> GetAll([FromUri] StudentsQueryParams studentsQueryParams)
+        public async Task<LinkedResourceCollection<object>> GetAll([FromUri] StudentsQueryParams studentsQueryParams)
         {
             var studentsQuery = this.studentsService.GetAll();
             var students = await this.studentsService

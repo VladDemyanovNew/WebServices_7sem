@@ -6,8 +6,9 @@ using System.Web;
 namespace Lab3.WebApi.Models.Resources
 {
     public class LinkedResourceCollection<TResource> : LinkedResource
-        where TResource : LinkedResource
     {
         public ICollection<TResource> Embedded { get; set; }
+
+        public int TotalCount { get; set; }
     }
 }

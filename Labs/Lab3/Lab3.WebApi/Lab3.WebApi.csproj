@@ -153,6 +153,7 @@
     <Compile Include="Helpers\StudentResourceHelper.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\ErrorResponse.cs" />
+    <Compile Include="Models\ObjectExtension.cs" />
     <Compile Include="Models\Resources\ErrorResource.cs" />
     <Compile Include="Models\Resources\LinkedResourceCollection.cs" />
     <Compile Include="Models\Resources\LinkedResource.cs" />

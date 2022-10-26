@@ -21,6 +21,6 @@ namespace Lab3.Core.Services.Abstractions
 
         Task UpdateAsync(int studentId, Student studentUpdateData);
 
-        IQueryable<Student> FilterByUriParams(IQueryable<Student> studentsQuery, StudentsQueryParams studentsQueryParams);
+        IQueryable<object> FilterByUriParams(IQueryable<Student> studentsQuery, StudentsQueryParams studentsQueryParams);
     }
 }
