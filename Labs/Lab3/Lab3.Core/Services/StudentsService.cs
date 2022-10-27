@@ -9,6 +9,7 @@ using Lab3.Database;
 using Lab3.Database.Entities;
 using Lab3.Core.Exceptions;
 using Lab3.Core.Models;
+using Lab3.Core.Helpers;
 
 namespace Lab3.Core.Services
 {
@@ -72,8 +73,7 @@ namespace Lab3.Core.Services
                 throw new ApiEntityNotFoundException($"Can't update student with id={studentId}, because it doesn't exist");
             }
 
-            studentUpdateData.Id = studentId;
-            this._dbContext.Entry(studentUpdateData).State = EntityState.Modified;
+            StudentHelper.Fill(studentUpdateData, student);
 
             await this._dbContext.SaveChangesAsync();
         }

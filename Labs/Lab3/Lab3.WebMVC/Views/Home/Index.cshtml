@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container">
+    <div>
+        <label>
+            <input type="checkbox" id="lastnameCheckbox"> Lastname
+        </label>
+        <label>
+            <input type="checkbox" id="nameCheckbox"> Name
+        </label>
+        <label>
+            <input type="checkbox" id="surnameCheckbox"> Surname
+        </label>
+        <label>
+            <input type="checkbox" id="phoneCheckbox"> Phone
+        </label>
+    </div>
+    <table id="studentsTable" class="table table-striped">
+    </table>
+    <nav aria-label="...">
+        <ul class="pager">
+            <li><a href="#" onclick="handlePager('first')">First</a></li>
+            <li><a href="#" onclick="handlePager('previous')">Previous</a></li>
+            <li><a href="#" onclick="handlePager('next')">Next</a></li>
+            <li><a href="#" onclick="handlePager('last')">Last</a></li>
+        </ul>
+    </nav>
+</div>
+
+<script type="text/javascript" src="~/Scripts/students.js"></script>

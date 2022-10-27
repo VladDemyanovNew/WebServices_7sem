@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\ApiEntityNotFoundException.cs" />
+    <Compile Include="Helpers\StudentHelper.cs" />
     <Compile Include="Helpers\StudentsQueryParamsHelper.cs" />
     <Compile Include="Models\StudentsQueryParams.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
