@@ -146,6 +146,8 @@
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Enums\HttpMethod.cs" />
     <Compile Include="Filters\ApiExceptionFilterAttribute.cs" />
+    <Compile Include="Filters\ResponseContentTypeAttribute.cs" />
+    <Compile Include="Formatters\ExpandoXmlMediaTypeFormatter.cs" />
     <Compile Include="Formatters\StudentResourceFormatter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

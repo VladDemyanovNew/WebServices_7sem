@@ -1,8 +1,8 @@
 using System.Web;
 using System.Web.Http;
+using System.Web.SessionState;
 
 using Lab3.WebApi.Formatters;
-
 
 namespace Lab3.WebApi
 {
@@ -11,16 +11,14 @@ namespace Lab3.WebApi
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
-        }
 
-        public static void ConfigureApis(HttpConfiguration config)
-        {
-            // config.Formatters.Add(new StudentResourceFormatter());
+            //GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+            //GlobalConfiguration.Configuration.Formatters.Add(new ExpandoXmlMediaTypeFormatter());
         }
 
         protected void Application_PostAuthorizeRequest()
         {
-            HttpContext.Current.SetSessionStateBehavior(System.Web.SessionState.SessionStateBehavior.Required);
+            HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
         }
     }
 }

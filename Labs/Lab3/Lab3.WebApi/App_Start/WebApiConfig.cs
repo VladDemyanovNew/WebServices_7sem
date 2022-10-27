@@ -10,7 +10,6 @@ namespace Lab3.WebApi
     {
         public static void Register(HttpConfiguration config)
         {
-
             config.Filters.Add(new ApiExceptionFilterAttribute());
 
             config.MapHttpAttributeRoutes();
