@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
@@ -12,7 +13,8 @@ namespace Lab3.WebApi.Filters
         public override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
             return Task.Run(() => {
-                bool isXml = actionContext.Request.RequestUri.Segments[2].EndsWith(".xml/");
+                string segment = actionContext.Request.RequestUri.Segments[2];
+                bool isXml = Regex.IsMatch(segment, @".xml(/)?$", RegexOptions.IgnoreCase);
                 if (isXml)
                 {
                     actionContext.Request.Headers.Accept.Clear();

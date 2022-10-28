@@ -12,7 +12,7 @@ namespace Lab3.WebApi
     {
         public static void Register(HttpConfiguration config)
         {
-            var cors = new EnableCorsAttribute("http://localhost:44364", "*", "*");
+            var cors = new EnableCorsAttribute("http://localhost:80", "*", "*"); // 44364
             config.EnableCors(cors);
 
             config.Filters.Add(new ApiExceptionFilterAttribute());

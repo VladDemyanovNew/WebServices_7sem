@@ -29,6 +29,7 @@ namespace Lab3.WebApi.Controllers
         [Route("")]
         public async Task<LinkedResourceCollection<object>> GetAll([FromUri] StudentsQueryParams studentsQueryParams)
         {
+            // TODO: DataMember Emit, IsRequired = false
             var studentsQuery = this.studentsService.GetAll();
             var students = await this.studentsService
                 .FilterByUriParams(studentsQuery, studentsQueryParams)

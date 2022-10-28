@@ -78,45 +78,57 @@ namespace Lab3.WebApi.Constants
                 ? 0
                 : uriParamsPrevPage.Offset - uriParamsPrevPage.Limit;
 
-            return new List<Link>
+            var links = new List<Link>()
             {
                 new Link(HttpMethod.POST)
                 {
                     Rel = "add-new",
-                    Href = linker.GetUri<StudentsController>(controller => 
+                    Href = linker.GetUri<StudentsController>(controller =>
                         controller.Post(null)).ToString(),
                 },
                 new Link(HttpMethod.GET)
                 {
                     Rel = "first-page",
-                    Href = linker.GetUri<StudentsController>(controller => 
-                        controller.GetAll(null)).ToString() + 
+                    Href = linker.GetUri<StudentsController>(controller =>
+                        controller.GetAll(null)).ToString() +
                         "?" + uriParamsFirstPage.ToQueryString(),
                 },
                 new Link(HttpMethod.GET)
                 {
                     Rel = "last-page",
-                    Href = linker.GetUri<StudentsController>(controller => 
+                    Href = linker.GetUri<StudentsController>(controller =>
                         controller.GetAll(null)).ToString() +
                         "?" + uriParamsLastPage.ToQueryString(),
                 },
-                new Link(HttpMethod.GET)
+            };
+
+            bool isNextVisible = uriParamsNextPage.Offset < studentsCount;
+            if (isNextVisible)
+            {
+                links.Add(new Link(HttpMethod.GET)
                 {
                     Rel = "next-page",
-                    Href = linker.GetUri<StudentsController>(controller => 
-                        controller.GetAll(null)).ToString() + 
+                    Href = linker.GetUri<StudentsController>(controller =>
+                        controller.GetAll(null)).ToString() +
                         "?" + uriParamsNextPage.ToQueryString(),
-                },
-                new Link(HttpMethod.GET)
+                });
+            }
+
+            bool isPreviousVisible = uriParams.Offset - uriParamsPrevPage.Limit >= 0;
+            if (isPreviousVisible)
+            {
+                links.Add(new Link(HttpMethod.GET)
                 {
                     Rel = "previous-page",
-                    Href = linker.GetUri<StudentsController>(controller => 
+                    Href = linker.GetUri<StudentsController>(controller =>
                         controller.GetAll(null)).ToString() +
                         "?" + uriParamsPrevPage.ToQueryString(),
-                },
-            };
-        }
+                });
+            }
 
+            return links;
+        }
+        
         public static List<Link> GetErrorResourceLinks(string guid, RouteLinker linker)
         {
             return new List<Link>

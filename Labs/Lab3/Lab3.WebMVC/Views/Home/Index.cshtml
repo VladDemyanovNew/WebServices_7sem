@@ -20,10 +20,10 @@
     <table id="studentsTable" class="table table-striped">
     </table>
     <nav aria-label="...">
-        <ul class="pager">
+        <ul class="pager" style="display: flex; justify-content: center;">
             <li><a href="#" onclick="handlePager('first')">First</a></li>
-            <li><a href="#" onclick="handlePager('previous')">Previous</a></li>
-            <li><a href="#" onclick="handlePager('next')">Next</a></li>
+            <li id="previousLink"><a href="#" onclick="handlePager('previous')">Previous</a></li>
+            <li id="nextLink"><a href="#" onclick="handlePager('next')">Next</a></li>
             <li><a href="#" onclick="handlePager('last')">Last</a></li>
         </ul>
     </nav>

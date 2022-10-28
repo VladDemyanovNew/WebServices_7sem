@@ -1,8 +1,4 @@
-﻿const lastnameInput = document.getElementById('lastnameInput0');
-const nameInput = document.getElementById('nameInput0');
-const surnameInput = document.getElementById('surnameInput0');
-const phoneInput = document.getElementById('phoneInput0');
-const studentsTable = document.getElementById('studentsTable');
+﻿const studentsTable = document.getElementById('studentsTable');
 
 const limit = 5;
 
@@ -15,6 +11,11 @@ const listLinks = {
 }
 
 const handleCreateClick = async () => {
+    const lastnameInput = document.getElementById('lastnameInput0');
+    const nameInput = document.getElementById('nameInput0');
+    const surnameInput = document.getElementById('surnameInput0');
+    const phoneInput = document.getElementById('phoneInput0');
+
     const studentCreateData = {
         LastName: lastnameInput.value,
         Name: nameInput.value,
@@ -22,7 +23,12 @@ const handleCreateClick = async () => {
         Phone: phoneInput.value,
     };
 
-    const studentResource = await createStudent(studentCreateData);
+    await createStudent(studentCreateData);
+
+    const studentsResource = await loadStudentsResource(listLinks.CurrentPageLink);
+
+    buildTable(studentsResource.Embedded);
+    setListLinks(studentsResource.Links, listLinks.CurrentPageLink);
 };
 
 const handleDeleteClick = async (url) => {
@@ -82,7 +88,7 @@ async function createStudent(studentCreateData) {
         body: JSON.stringify(studentCreateData),
     };
 
-    const response = await fetch('http://localhost:44367/api/students', requestOptions);
+    const response = await fetch('http://localhost:80/WebAPI/api/students', requestOptions);
     return await response.json();
 }
 
@@ -174,14 +180,20 @@ function buildTable(students) {
 function setListLinks(links, currentLink) {
     listLinks.FirstPageLink = links.find(x => x.Rel === 'first-page').Href;
     listLinks.LastPageLink = links.find(x => x.Rel === 'last-page').Href;
-    listLinks.NextPageLink = links.find(x => x.Rel === 'next-page').Href;
-    listLinks.PreviousPageLink = links.find(x => x.Rel === 'previous-page').Href;
+    listLinks.NextPageLink = links.find(x => x.Rel === 'next-page')?.Href;
+    listLinks.PreviousPageLink = links.find(x => x.Rel === 'previous-page')?.Href;
     listLinks.CurrentPageLink = currentLink;
+
+    const previousLink = document.getElementById('previousLink');
+    const nextLink = document.getElementById('nextLink');
+
+    previousLink.style.display = listLinks.PreviousPageLink == undefined ? 'none' : 'block';
+    nextLink.style.display = listLinks.NextPageLink == undefined ? 'none' : 'block';
 }
 
 (async () => {
-    const studentsResource = await loadStudentsResource(`http://localhost:44367/api/students/?limit=${limit}`);
+    const studentsResource = await loadStudentsResource(`http://localhost:80/WebAPI/api/students/?limit=${limit}`);
 
     buildTable(studentsResource.Embedded);
-    setListLinks(studentsResource.Links, `http://localhost:44367/api/students/?limit=${limit}`);
+    setListLinks(studentsResource.Links, `http://localhost:80/WebAPI/api/students/?limit=${limit}`);
 })();
