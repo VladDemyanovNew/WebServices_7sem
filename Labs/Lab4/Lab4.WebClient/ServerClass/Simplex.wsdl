@@ -1,0 +1,207 @@
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://dvr/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://dvr/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Performs simple operations.</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://dvr/">
+      <s:element name="Simplex.Add">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="x" type="s:int"/>
+            <s:element minOccurs="1" maxOccurs="1" name="y" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Simplex.AddResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Simplex.AddResult" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Simplex.Adds">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="x" type="s:int"/>
+            <s:element minOccurs="1" maxOccurs="1" name="y" type="s:int"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Simplex.AddsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Simplex.AddsResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Simplex.Concat">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="s" type="s:string"/>
+            <s:element minOccurs="1" maxOccurs="1" name="d" type="s:double"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Simplex.ConcatResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Simplex.ConcatResult" type="s:string"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Simplex.Sum">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="a1" type="tns:A"/>
+            <s:element minOccurs="0" maxOccurs="1" name="a2" type="tns:A"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="A">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="S" type="s:string"/>
+          <s:element minOccurs="1" maxOccurs="1" name="K" type="s:int"/>
+          <s:element minOccurs="1" maxOccurs="1" name="F" type="s:float"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Simplex.SumResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Simplex.SumResult" type="tns:A"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="Simplex.AddSoapIn">
+    <wsdl:part name="parameters" element="tns:Simplex.Add"/>
+  </wsdl:message>
+  <wsdl:message name="Simplex.AddSoapOut">
+    <wsdl:part name="parameters" element="tns:Simplex.AddResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Simplex.AddsSoapIn">
+    <wsdl:part name="parameters" element="tns:Simplex.Adds"/>
+  </wsdl:message>
+  <wsdl:message name="Simplex.AddsSoapOut">
+    <wsdl:part name="parameters" element="tns:Simplex.AddsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Simplex.ConcatSoapIn">
+    <wsdl:part name="parameters" element="tns:Simplex.Concat"/>
+  </wsdl:message>
+  <wsdl:message name="Simplex.ConcatSoapOut">
+    <wsdl:part name="parameters" element="tns:Simplex.ConcatResponse"/>
+  </wsdl:message>
+  <wsdl:message name="Simplex.SumSoapIn">
+    <wsdl:part name="parameters" element="tns:Simplex.Sum"/>
+  </wsdl:message>
+  <wsdl:message name="Simplex.SumSoapOut">
+    <wsdl:part name="parameters" element="tns:Simplex.SumResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="SimplexSoap">
+    <wsdl:operation name="Add">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns sum.</wsdl:documentation>
+      <wsdl:input name="Simplex.Add" message="tns:Simplex.AddSoapIn"/>
+      <wsdl:output name="Simplex.Add" message="tns:Simplex.AddSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns sum.</wsdl:documentation>
+      <wsdl:input name="Simplex.Adds" message="tns:Simplex.AddsSoapIn"/>
+      <wsdl:output name="Simplex.Adds" message="tns:Simplex.AddsSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns concatenation.</wsdl:documentation>
+      <wsdl:input name="Simplex.Concat" message="tns:Simplex.ConcatSoapIn"/>
+      <wsdl:output name="Simplex.Concat" message="tns:Simplex.ConcatSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns instance of class A.</wsdl:documentation>
+      <wsdl:input name="Simplex.Sum" message="tns:Simplex.SumSoapIn"/>
+      <wsdl:output name="Simplex.Sum" message="tns:Simplex.SumSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SimplexSoap" type="tns:SimplexSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Add">
+      <soap:operation soapAction="http://dvr/Simplex.Add" style="document"/>
+      <wsdl:input name="Simplex.Add">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Simplex.Add">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <soap:operation soapAction="http://dvr/Simplex.Adds" style="document"/>
+      <wsdl:input name="Simplex.Adds">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Simplex.Adds">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <soap:operation soapAction="http://dvr/Simplex.Concat" style="document"/>
+      <wsdl:input name="Simplex.Concat">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Simplex.Concat">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <soap:operation soapAction="http://dvr/Simplex.Sum" style="document"/>
+      <wsdl:input name="Simplex.Sum">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Simplex.Sum">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SimplexSoap12" type="tns:SimplexSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Add">
+      <soap12:operation soapAction="http://dvr/Simplex.Add" style="document"/>
+      <wsdl:input name="Simplex.Add">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Simplex.Add">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Adds">
+      <soap12:operation soapAction="http://dvr/Simplex.Adds" style="document"/>
+      <wsdl:input name="Simplex.Adds">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Simplex.Adds">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Concat">
+      <soap12:operation soapAction="http://dvr/Simplex.Concat" style="document"/>
+      <wsdl:input name="Simplex.Concat">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Simplex.Concat">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Sum">
+      <soap12:operation soapAction="http://dvr/Simplex.Sum" style="document"/>
+      <wsdl:input name="Simplex.Sum">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="Simplex.Sum">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Simplex">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Performs simple operations.</wsdl:documentation>
+    <wsdl:port name="SimplexSoap" binding="tns:SimplexSoap">
+      <soap:address location="http://localhost:64331/Simplex.asmx"/>
+    </wsdl:port>
+    <wsdl:port name="SimplexSoap12" binding="tns:SimplexSoap12">
+      <soap12:address location="http://localhost:64331/Simplex.asmx"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,4 @@
+wsdl.exe /serverInterface http://localhost:64331/Simplex.asmx?wsdl
+
+
+wsdl.exe /server /n:WebServices.Example01A http://localhost:64331/Simplex.asmx?wsdl

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -14,6 +15,13 @@ namespace Lab3.WebApi.Filters
         {
             return Task.Run(() => {
                 string segment = actionContext.Request.RequestUri.Segments[2];
+
+                string serverName = ConfigurationManager.AppSettings["WebServer"];
+                if (serverName == "IIS")
+                {
+                    segment = actionContext.Request.RequestUri.Segments[3];
+                }
+
                 bool isXml = Regex.IsMatch(segment, @".xml(/)?$", RegexOptions.IgnoreCase);
                 if (isXml)
                 {

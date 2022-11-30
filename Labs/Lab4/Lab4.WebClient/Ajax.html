@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Ajax</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Ajax</h1>
+    <label>x:</label>
+    <input type="number" id="x" />
+    <label>y:</label>
+    <input type="number" id="y" />
+    <button type="button" id="send_btn">Send</button>
+    <label>Result:</label>
+    <input type="number" id="result" readonly />
+
+    <script type="text/javascript">
+        $(document).ready(() => {
+            $('#send_btn').click(() => {
+                const x = $('#x').val();
+                const y = $('#y').val();
+                const args = JSON.stringify({ x: x, y: y });
+
+                $.ajax({
+                    type: 'POST',
+                    contentType: "application/json; charset=utf-8",
+                    url: '/SimplexByWsdl.asmx/Adds',
+                    data: args,
+                    dataType: "json",
+                    success: (data, status) => {
+                        $('#result').val(data.d);
+                    },
+                    error: (request, status, error) => {
+                        console.log(error);
+                    },
+                });
+            });
+        });
+    </script>
+</body>
+</html>
