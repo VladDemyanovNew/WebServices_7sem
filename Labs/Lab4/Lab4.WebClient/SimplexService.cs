@@ -8,7 +8,7 @@ using Lab4.WebClient.ServerClass;
 namespace Lab4.WebClient
 {
     [ScriptService]
-    public class SimplexService : ServerClass.Simplex
+    public class SimplexService : Simplex
     {
         [return: XmlElement("Simplex.AddResult")]
         public override int Add(int x, int y) => x + y;

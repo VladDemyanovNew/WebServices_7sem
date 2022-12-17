@@ -14,8 +14,10 @@ namespace Lab5.ConsoleClient
 
             try
             {
-                var binding = new NetTcpBinding();
-                var address = new EndpointAddress("net.tcp://localhost:5000/WcfSiplex");
+                // var binding = new NetTcpBinding();
+                // var address = new EndpointAddress("net.tcp://localhost:5000/WcfSiplex");
+                var binding = new BasicHttpBinding();
+                var address = new EndpointAddress("http://localhost/WcfSiplex");
                 var channel = new ChannelFactory<WebService.IWcfSiplex>(binding, address);
 
                 idd = channel.CreateChannel();

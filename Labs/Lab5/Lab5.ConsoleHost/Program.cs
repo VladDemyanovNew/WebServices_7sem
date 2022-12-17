@@ -12,12 +12,18 @@ namespace Lab5.ConsoleHost
             try
             {
                 host = new ServiceHost(typeof(WebService.WcfSiplex));
-                var binding = new NetTcpBinding();
+                //var binding = new NetTcpBinding();
+                var binding = new BasicHttpBinding(BasicHttpSecurityMode.None)
+                {
+                    AllowCookies = true,
+                    SendTimeout = TimeSpan.FromMinutes(10),
+                };
 
+                // new Uri("net.tcp://localhost:5000/WcfSiplex"));
                 _ = host.AddServiceEndpoint(
                     typeof(WebService.IWcfSiplex),
                     binding,
-                    new Uri("net.tcp://localhost:5000/WcfSiplex"));
+                    "http://localhost/WcfSiplex");
 
                 while (true)
                 {
