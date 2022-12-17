@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<button onclick="onGetBtnClick()">Get</button>
+
+<script type="text/javascript">
+
+    async function onGetBtnClick() {
+        const response = await fetch('http://localhost:53215/Services/WsDvr.svc/Students?$format=json');
+        const odataValue = await response.json();
+        console.log(odataValue.value);
+    }
+
+</script>
+

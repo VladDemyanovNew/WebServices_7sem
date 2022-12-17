@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Lab6.WebApp")]
+[assembly: AssemblyTitle("Lab6.WebServices")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Lab6.WebApp")]
+[assembly: AssemblyProduct("Lab6.WebServices")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d210c3f3-ae37-48e1-83a9-bd7432c90c7e")]
+[assembly: Guid("f881991d-7ef2-42df-a0d7-5253be0686c2")]
 
 // Version information for an assembly consists of the following four values:
 //
