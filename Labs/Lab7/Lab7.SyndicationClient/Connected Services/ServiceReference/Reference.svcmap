@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bdce0fc4-cad0-4595-837d-e7db083b2521" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:40001/SyndicationService/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="866e75c9-9a4b-47e0-a699-fcfcea1bfbd7" SourceId="1" SourceUrl="http://localhost:40001/SyndicationService/?xsd=xsd0" />
+    <MetadataFile FileName="WsDvrFeed.wsdl" MetadataType="Wsdl" ID="516c4cdd-4d95-4c74-946d-f30a5e487bbd" SourceId="1" SourceUrl="http://localhost:40001/SyndicationService/?wsdl" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="07d19e84-08a1-435f-803d-a7958d5a88f4" SourceId="1" SourceUrl="http://localhost:40001/SyndicationService/?xsd=xsd2" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="ac1e5a0c-338d-4006-aaee-9a67f0d1d292" SourceId="1" SourceUrl="http://localhost:40001/SyndicationService/?xsd=xsd1" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="8036f094-e189-471f-a52c-f3fcea996ac0" SourceId="1" SourceUrl="http://localhost:40001/SyndicationService/?xsd=xsd3" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="d6c84da3-8e7a-45e1-9b5e-1a8ca81e9efd" SourceId="1" SourceUrl="http://localhost:40001/SyndicationService/?disco" />
+    <MetadataFile FileName="item4.xsd" MetadataType="Schema" ID="40367819-cb45-41b1-a2e7-2b10f8ec0f6e" SourceId="1" SourceUrl="http://localhost:40001/SyndicationService/?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
